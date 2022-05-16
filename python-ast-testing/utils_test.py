@@ -1,8 +1,7 @@
 from utils import get_functions, has_any_statement
 import ast
 
-
-code_with_just_2_functions = """
+code_with_only_2_functions = """
 def sum(a, b):
     return a + b
 
@@ -10,7 +9,7 @@ def subtr(a, b):
     return a - b
 """
 
-code_with_2_functions_and_a_statement = """
+code_with_2_functions_and_a_expression = """
 def sum(a, b):
     return a + b
 
@@ -20,7 +19,35 @@ def subtr(a, b):
 print("hello")
 """
 
-def test_that_only_2_methods_are_present():
-    tree = ast.parse(code_with_2_functions_and_a_statement)
-    assert len(get_functions(tree.body)) == 2
-    assert not has_any_statement(tree.body)
+code_with_2_functions_and_assignments = """
+def sum(a, b):
+    return a + b
+
+def subtr(a, b):
+    return a - b
+
+a = 1
+b = ""
+"""
+
+code_with_2_functions_and_constants = """
+def sum(a, b):
+    return a + b
+
+def subtr(a, b):
+    return a - b
+
+""
+True
+"""
+
+
+def test_that_2_methods_are_present():
+    assert len(get_functions(ast.parse(code_with_2_functions_and_a_expression).body)) == 2
+
+
+def test_that_there_are_no_statements():
+    assert not has_any_statement(ast.parse(code_with_only_2_functions).body)
+    assert has_any_statement(ast.parse(code_with_2_functions_and_a_expression).body)
+    assert has_any_statement(ast.parse(code_with_2_functions_and_assignments).body)
+    assert has_any_statement(ast.parse(code_with_2_functions_and_constants).body)

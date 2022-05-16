@@ -1,16 +1,20 @@
 import ast
 
+
 def get_functions(body):
-    functions = []
+    funcs = []
     for node in body:
         match node:
             case ast.FunctionDef():
-                functions.append(node)
-    return functions
+                funcs.append(node)
+    return funcs
+
 
 def has_any_statement(body):
     for node in body:
         match node:
-            case ast.Expr:
+            case ast.Expr():
+                return True
+            case ast.Assign():
                 return True
     return False
