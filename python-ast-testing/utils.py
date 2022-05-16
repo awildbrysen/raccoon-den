@@ -18,3 +18,12 @@ def has_any_statement(body):
             case ast.Assign():
                 return True
     return False
+
+
+def has_function_with_name(body, name):
+    for node in body:
+        match node:
+            case ast.FunctionDef():
+                if node.name == name:
+                    return True
+    return False

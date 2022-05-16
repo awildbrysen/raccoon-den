@@ -1,4 +1,4 @@
-from utils import get_functions, has_any_statement
+from utils import get_functions, has_any_statement, has_function_with_name
 import ast
 
 code_with_only_2_functions = """
@@ -51,3 +51,9 @@ def test_that_there_are_no_statements():
     assert has_any_statement(ast.parse(code_with_2_functions_and_a_expression).body)
     assert has_any_statement(ast.parse(code_with_2_functions_and_assignments).body)
     assert has_any_statement(ast.parse(code_with_2_functions_and_constants).body)
+
+
+def test_has_function_with_name():
+    tree = ast.parse(code_with_only_2_functions)
+    assert has_function_with_name(tree.body, "sum")
+    assert not has_function_with_name(tree.body, "test")
